@@ -10,6 +10,7 @@ export class JwtInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).do((event: HttpEvent<any>) => {
+
       if (event instanceof HttpResponse) {
         // do stuff with response if you want
       }

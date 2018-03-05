@@ -5,7 +5,7 @@ import {ToggleFullScreenDirective} from './fullscreen/toggle-fullscreen.directiv
 import {AccordionAnchorDirective} from './accordion/accordionanchor.directive';
 import {AccordionLinkDirective} from './accordion/accordionlink.directive';
 import {AccordionDirective} from './accordion/accordion.directive';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScrollbarModule} from 'ngx-perfect-scrollbar';
 import {TitleComponent} from '../layout/admin/title/title.component';
 import {CardComponent} from './card/card.component';
@@ -16,6 +16,7 @@ import {SpinnerComponent} from './spinner/spinner.component';
 import {ClickOutsideModule} from 'ng-click-outside';
 import {MDBBootstrapModule} from 'angular-bootstrap-md';
 import {ToastyModule} from 'ng2-toasty';
+import {TokenInterceptor} from './interceptors/token.interceptor';
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
@@ -66,6 +67,11 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
     {
       provide: PERFECT_SCROLLBAR_CONFIG,
       useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
     }
 
   ]

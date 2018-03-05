@@ -1,3 +1,84 @@
-<p>
-  list-blog works!
-</p>
+
+<div class="row">
+  <div class="col-sm-10">
+    <app-card [title]="'List blog'">
+      <div class="row">
+        <div class="col-sm-12">
+          <label class="dt-cust-search f-right">
+            <div class="form-group">
+              <label>Search: </label>
+              <input
+                type='text'
+                class="form-control input-sm m-l-10"
+                placeholder='Search Name'
+                (keyup)='updateFilter($event)'
+              />
+            </div>
+          </label>
+        </div>
+      </div>
+      <ngx-datatable
+        class="data-table dt-chk"
+        [rows]="rows"
+        [columnMode]="'force'"
+        [headerHeight]="50"
+        [footerHeight]="50"
+        [rowHeight]="'auto'"
+        [limit]="10"
+        [selected]="selected"
+        [selectionType]="'checkbox'"
+        (activate)="onActivate($event)"
+        (select)='onSelect($event)'>
+        <ngx-datatable-column [width]="50" [sortable]="false" [canAutoResize]="false" [draggable]="false" [resizeable]="false">
+          <ng-template class="datatable-checkbox" ngx-datatable-header-template let-value="value" let-allRowsSelected="allRowsSelected" let-selectFn="selectFn">
+            <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+              <label>
+                <input type="checkbox" [checked]="allRowsSelected" (change)="selectFn(!allRowsSelected)"/>
+                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+              </label>
+            </div>
+
+          </ng-template>
+          <ng-template class="datatable-checkbox" ngx-datatable-cell-template let-value="value" let-isSelected="isSelected" let-onCheckboxChangeFn="onCheckboxChangeFn">
+            <div class="checkbox-fade fade-in-default datatable-header-cell-label">
+              <label>
+                <input type="checkbox" [checked]="isSelected" (change)="onCheckboxChangeFn($event)"/>
+                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+              </label>
+            </div>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Status" [width]="85" [canAutoResize]="false">
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <label *ngIf="row['published'] == 1" class="label label-success">Published</label>
+            <label *ngIf="row['published'] == 0" class="label label-primary">Concept</label>
+          </ng-template>
+        </ngx-datatable-column>
+        <ngx-datatable-column name="Slug"></ngx-datatable-column>
+        <ngx-datatable-column name="Title"></ngx-datatable-column>
+        <ngx-datatable-column>
+          <ng-template ngx-datatable-header-template>
+            <span class="datatable-header-cell-label">Options</span>
+          </ng-template>
+          <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
+            <a [routerLink]="['/blog/edit-blog/'+row['id']]"><i class="fa fa-pencil-square-o f-16 m-r-15"></i></a>
+            <a><i class="fa fa-trash f-16"></i></a>
+          </ng-template>
+        </ngx-datatable-column>
+      </ngx-datatable>
+      <div class="row">
+        <div class='col-sm-12 selected-column'>
+          <h4 class="sub-title p-t-15">Selected Row</h4>
+          <span *ngFor='let sel of selected'>
+          <label class="label label-primary">{{sel.slug}}</label>
+        </span>
+          <span *ngIf="!selected.length">No Selections</span>
+        </div>
+      </div>
+    </app-card>
+
+  </div>
+  <div class="col-sm-2">
+    <app-categories></app-categories>
+  </div>
+</div>

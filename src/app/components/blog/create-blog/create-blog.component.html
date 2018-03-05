@@ -1,16 +1,123 @@
-
-
-
 <div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-8">
     <div class="card">
       <div class="card-header">
-        <h5>Material Form Inputs</h5>
-        <!--<span>Add class of <code>.form-control</code> with <code>&lt;input&gt;</code> tag</span>-->
+        <h5>{{ texts[0]?.title }}</h5>
+
       </div>
       <div class="card-block">
-        <div [froalaEditor]>Hello, Froala!</div>
+        <form class="form-material" [formGroup]="blogForm" #blog="ngForm">
+          <div class="form-group form-default">
+            <input type="text" name="title" formControlName="title" class="form-control" required="">
+            <span class="form-bar"></span>
+            <label class="float-label">Enter title</label>
+          </div>
+          <div class="form-group form-default">
+            <input type="text" name="slug" formControlName="slug" class="form-control" required="">
+            <span class="form-bar"></span>
+            <label class="float-label">Enter slug</label>
+          </div>
+          <div class="form-group form-default">
+            <textarea [froalaEditor] formControlName="body"></textarea>
+          </div>
+
+
+        </form>
+      </div>
+
+
+    </div>
+  </div>
+  <div class="col-sm-4">
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Publish</h5>
+          </div>
+          <div *ngIf="!edit" class="card-block">
+            <button (click)="storePost(blog, 0)" class="btn btn-mat btn-success">Save as concept</button>
+            <button (click)="storePost(blog, 1)" class="btn btn-mat btn-primary">Publish</button>
+          </div>
+          <div *ngIf="edit" class="card-block">
+            <button (click)="updatePost(0)" class="btn btn-mat btn-success">Save as concept</button>
+            <button (click)="updatePost(1)" class="btn btn-mat btn-primary">Update & publish</button>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-12">
+        <app-card [title]="'Tags'">
+          <tag-input class="tag-chips" [(ngModel)]="tags" [identifyBy]="'id'" [displayBy]="'name'"></tag-input>
+        </app-card>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Category</h5>
+          </div>
+          <div class="card-block">
+            <perfect-scrollbar style="max-height: 400px;">
+
+              <ul>
+                <li *ngFor="let category of categories">
+                  <div class="checkbox-fade fade-in-primary">
+                    <label>
+                      <input type="radio" name="category" (change)="onSelectCategory($event)" [checked]="category.id === selectedCategoryId"
+                             value="{{ category.id }}">
+                      <span class="cr">
+                      <i class="cr-icon icofont icofont-ui-check txt-primary"></i>
+                    </span>
+                      <span>{{ category.name }}</span>
+                    </label>
+                  </div>
+                </li>
+              </ul>
+
+
+            </perfect-scrollbar>
+            <p class="text-inverse text-btn" (click)="toggleAddNewColumn()"><i
+              [ngClass]="{'icofont-plus':addNewColumn == false,'icofont-minus':addNewColumn == true}"
+              class="icofont "></i>Create new category</p>
+
+            <form *ngIf="addNewColumn == true" (ngSubmit)="storeCategory(cat)" #cat="ngForm"
+                  class="form-material m-t-30">
+              <div class="form-group form-default">
+                <input type="text" name="name" ngModel class="form-control" required="">
+                <span class="form-bar"></span>
+                <label class="float-label">Enter new column</label>
+              </div>
+              <button type="submit" class="btn btn-primary btn-md btn-block waves-light text-center m-b-20"
+                      mdbRippleRadius>Add
+              </button>
+
+            </form>
+          </div>
+
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header">
+            <h5>Featured image</h5>
+          </div>
+          <div class="card-block">
+            <image-upload *ngIf="!edit" [max]="1" url="http://localhost:8000/api/blog/storeimage"
+                          (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
+                          [extensions]="['jpeg','png','jpg']"></image-upload>
+            <image-upload *ngIf="postLoaded" [max]="1" url="http://localhost:8000/api/blog/storeimage"
+                          (removed)="onRemoved($event)" (uploadFinished)="onUploadFinished($event)"
+                          [uploadedFiles]="[featured_image_uploaded]"
+                          [extensions]="['jpeg','png','jpg']"></image-upload>
+
+
+          </div>
+
+        </div>
       </div>
     </div>
   </div>
+
 </div>
+<ng2-toasty></ng2-toasty>
+

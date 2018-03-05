@@ -8,9 +8,9 @@ const routes: Routes = [
     path: '',
     component: CreateBlogComponent,
     data: {
-      title: 'Create blog',
+      title: 'Blog component',
       icon: 'icon-user',
-      caption: 'Create blog',
+      caption: 'Blog component',
       status: true
     }
   }

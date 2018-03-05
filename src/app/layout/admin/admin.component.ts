@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {animate, AUTO_STYLE, state, style, transition, trigger} from '@angular/animations';
 import {MenuItems} from '../../shared/menu-items/menu-items';
-import {UserService} from '../../shared/services/user.service';
+import {USER, UserService} from '../../shared/services/user.service';
 import {AuthService} from '../../shared/services/auth.service';
 import {Router} from '@angular/router';
 
@@ -84,7 +84,7 @@ import {Router} from '@angular/router';
   ]
 })
 export class AdminComponent implements OnInit {
-  public user: object;
+  public user: USER;
 
   public navType: string;
   public themeLayout: string;

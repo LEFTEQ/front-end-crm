@@ -7,7 +7,10 @@ const routes: Routes = [
     path: '',
     component: ListBlogComponent,
     data: {
-      title: 'Simple Login'
+      title: 'List blog component',
+      icon: 'icon-user',
+      caption: 'List blog component',
+      status: false
     }
   }
 ];

@@ -17,6 +17,10 @@ const routes: Routes = [
       {
         path: 'list-blog',
         loadChildren: './list-blog/list-blog.module#ListBlogModule'
+      },
+      {
+        path: 'edit-blog/:id',
+        loadChildren: './create-blog/create-blog.module#CreateBlogModule'
       }
     ]
   }

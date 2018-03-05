@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpClientModule, HttpHeaders, HttpRequest} from '@angular/common/http';
-import {ToastyService} from 'ng2-toasty';
 import {environment} from '../../../environments/environment';
 
 
@@ -30,7 +29,7 @@ export class AuthService {
   cachedRequests: Array<HttpRequest<any>> = [];
   tokenSingle: string;
 
-  constructor(private http: HttpClient, private toast: ToastyService) {
+  constructor(private http: HttpClient) {
   }
 
 
@@ -41,7 +40,7 @@ export class AuthService {
   }
 
   public onSignUp(username: string, email: string, password: string) {
-    return this.http.post<SIGNup>(environment.apiUrl + '/api/user/signup',
+    return this.http.post<SIGNup>(environment.apiUrl + '/user/signup',
       {username: username, email: email, password: password},
       httpOptions);
   }

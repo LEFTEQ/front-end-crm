@@ -1,0 +1,34 @@
+<div class="card">
+  <div class="card-header">
+    <h5>Categories</h5>
+  </div>
+  <div class="card-block">
+    <perfect-scrollbar style="max-height: 400px;">
+
+      <ul>
+        <li *ngFor="let category of categories">
+      <span>{{ category.name }}</span>
+        </li>
+      </ul>
+
+
+    </perfect-scrollbar>
+    <p class="text-inverse text-btn" (click)="toggleAddNewColumn()"><i
+      [ngClass]="{'icofont-plus':addNewColumn == false,'icofont-minus':addNewColumn == true}"
+      class="icofont "></i>Create new category</p>
+
+    <form *ngIf="addNewColumn == true" (ngSubmit)="storeCategory(cat)" #cat="ngForm"
+          class="form-material m-t-30">
+      <div class="form-group form-default">
+        <input type="text" name="name" ngModel class="form-control" required="">
+        <span class="form-bar"></span>
+        <label class="float-label">Enter new column</label>
+      </div>
+      <button type="submit" class="btn btn-primary btn-md btn-block waves-light text-center m-b-20"
+              mdbRippleRadius>Add
+      </button>
+
+    </form>
+  </div>
+
+</div>
